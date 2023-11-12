@@ -1,0 +1,28 @@
+const File = SpreadsheetApp.getActiveSpreadsheet();
+const ss = File.getActiveSheet();
+
+function WorkStart(){
+    // B列（朝業務開始）の最終行を取得
+    var lastRow = ss.getRange("b4").getNextDataCell(SpreadsheetApp.Direction.DOWN).getRow();
+    
+    // 現在時刻を取得
+    var now = new Date();
+    now = Utilities.formatDate(now, "Asia/Tokyo", "HH:mm:ss");
+    console.log(now);
+
+    // 現在時刻を本日分のところにセット
+    ss.getRange(lastRow+1,2).setValue(now);
+}
+
+function WorkStop(){
+    var lastRow = ss.getRange("b4").getNextDataCell(SpreadsheetApp.Direction.DOWN).getRow();
+    var col = ss.getRange(lastRow,1).getNextDataCell(SpreadsheetApp.Direction.NEXT).getColumn();
+    
+    // 現在時刻を取得
+    var now = new Date();
+    now = Utilities.formatDate(now, "Asia/Tokyo", "HH:mm:ss");
+    // console.log(now);
+
+    // 現在時刻を本日分のところにセット
+    ss.getRange(lastRow,col+1).setValue(now);
+}
